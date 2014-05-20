@@ -27,27 +27,52 @@ class Model{
 
             $getAllWidgetData = self::getAllWidgetData();
 
-            $searchResults = Array();
+            if (!empty($getAllWidgetData)){
 
-            foreach ($getAllWidgetData as $widgetKey=>$widget){
+                $searchResults = Array();
 
-                $text = self::getWidgetText($widget);
+                foreach ($getAllWidgetData as $widgetKey=>$widget){
+
+                    $text = self::getWidgetText($widget);
 
 
-                foreach ($searchWords as $searchWord){
-                    if (substr_count(strtolower($text), strtolower($searchWord))){
-                        $result['title'] = $widget['title'];
-                        $result['url'] = ipHomeUrl().$widget['urlPath'];
-                        $result['description'] = self::html2text($text);
-                        $searchResults[] = $result;
+                    foreach ($searchWords as $searchWord){
+                        if (substr_count(strtolower($text), strtolower($searchWord))){
+                            $result['pageId'] = $widget['pageId'];
+                            $result['title'] = $widget['title'];
+                            $result['url'] = ipHomeUrl().$widget['urlPath'];
+                            $result['description'] = self::html2text($text);
+                            $searchResults[] = $result;
+                        }
                     }
                 }
-            }
 
-            return $searchResults;
+
+                $searchResults = self::filterUniquePageIds($searchResults);
+
+                return $searchResults;
+            }
         }
 
 
+    }
+
+    /**
+     * Taken from stackoverflow post by Erik Töyrä
+     */
+    private static function filterUniquePageIds($searchResults){
+        $pageIds = array();
+
+        $searchResults = array_filter($searchResults, function($el) use (&$pageIds) {
+            if (in_array($el['pageId'], $pageIds)) { // if the id has already been seen
+                return false; // remove it
+            } else {
+                $pageIds[] = $el['pageId']; // the id has now been seen
+                return true;
+            }
+        });
+
+        return $searchResults;
     }
 
     private static function getWidgetText($widget){
@@ -91,13 +116,12 @@ class Model{
                 p.isSecured=0 and
                 p.isDeleted=0 and
                 p.urlPath<>""';
-
         $ra = ipDb()->fetchAll($sql);
-
         return $ra;
+
     }
 
-    public static function getSearchBoxForm($query){
+    public static function getSearchBoxForm($query=''){
 
         /**
          * @var $form \Ip\Form
@@ -108,6 +132,7 @@ class Model{
             array(
                 'name' => 'search',
                 'label' => __('Search:', 'Search'),
+                'value' => $query
             ));
         $form->addField($field);
 

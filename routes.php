@@ -11,7 +11,8 @@ $routes[ipGetOption('Search.url').'{/query}'] = array(
                 'url' => ipRouteUrl('Search')
             );
 
-            $html = ipSlot('searchBox', $data);
+
+            $html = ipSlot('searchBox', $query);
             $html .= ipSlot('searchResults', $query);
 
             return $html;
