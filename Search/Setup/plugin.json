@@ -1,0 +1,15 @@
+{
+    "title": "Search",
+    "version": "1.00",
+    "name": "Search",
+    "description": "Search plugin for Impresspages.",
+    "author": "ImpressPages",
+    "options": [
+        {
+            "label": "Search URL (e.g. search)",
+            "name": "url",
+            "type": "text",
+            "default": "search"
+        }
+    ]
+}
