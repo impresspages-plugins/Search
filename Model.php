@@ -147,6 +147,12 @@ class Model{
             ));
         $form->addField($field);
 
+        $field = new \Ip\Form\Field\Hidden(
+            array(
+                'name' => 'langUrl',
+                'value' => ipContent()->getCurrentLanguage()->getUrlPath()
+            ));
+        $form->addField($field);
 
         $form->setAction(ipRouteUrl('Search'));
         $form->setMethod('get');
