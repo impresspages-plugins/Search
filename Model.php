@@ -96,12 +96,16 @@ class Model{
 
         $html2text = new \Ip\Internal\Text\Html2Text(htmlspecialchars_decode($html), false);
         $text = esc($html2text->get_text());
+        $text = str_replace('[', ' ', $text);
+        $text = str_replace(']', ' ', $text);
 
         return $text;
     }
 
     public static function getAllWidgetData()
     {
+
+        $langCode = ipContent()->getCurrentLanguage()->getCode();
 
         $sql =
             'select distinct p.id as pageId, p.title as title, p.urlPath as urlPath, w.name as name, w.data as data from '.ipTable('page').' as p
@@ -115,7 +119,8 @@ class Model{
                 p.isDisabled=0 and
                 p.isSecured=0 and
                 p.isDeleted=0 and
-                p.urlPath<>""';
+                p.urlPath<>"" and
+                p.languageCode="'.$langCode.'"';
         $ra = ipDb()->fetchAll($sql);
         return $ra;
 
