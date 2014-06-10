@@ -1,7 +1,5 @@
 # Search plugin
 
-!!! Warning: this plugin is still under development. !!!
-
 Search plugin for ImpressPages 4.
 
 ## Features
