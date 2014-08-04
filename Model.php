@@ -80,11 +80,11 @@ class Model{
 
         switch ($widget['name']){
             case 'Heading':
-                $text = $widgetValue['title'];
-            break;
+                $text = empty($widgetValue['title']) ? '' : $widgetValue['title'];
+                break;
             case 'Text':
-                $text = $widgetValue['text'];
-            break;
+                $text = empty($widgetValue['text']) ? '' : $widgetValue['text'];
+                break;
             default:
                 $text = '';
             break;
