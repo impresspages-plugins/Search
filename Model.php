@@ -87,6 +87,12 @@ class Model{
                 break;
             default:
                 $text = '';
+                $textValues = array('text', 'title', 'heading');
+                foreach($textValues as $key) {
+                    if (!empty($widgetValue[$key])) {
+                        $text .= $widgetValue[$key];
+                    }
+                }
             break;
         }
         return $text;
