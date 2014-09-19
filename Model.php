@@ -100,8 +100,11 @@ class Model{
 
     private static function html2text($html){
 
-        $html2text = new \Ip\Internal\Text\Html2Text(htmlspecialchars_decode($html), false);
-        $text = esc($html2text->get_text());
+        try {
+            $text = Html2Text::convert(htmlspecialchars_decode($html));
+        } catch (Html2TextException $e) {
+            $text = '';
+        }
         $text = str_replace('[', ' ', $text);
         $text = str_replace(']', ' ', $text);
 
