@@ -16,7 +16,7 @@
  *    ImpressPages team - objectify the code
  ****************************************************************************/
 
-namespace Plugin\NewsList;
+namespace Plugin\Search;
 
 
 class Html2TextException extends \Exception {
