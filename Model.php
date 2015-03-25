@@ -12,48 +12,48 @@ class Model{
 
     public static function getSearchResults($query){
 
-        if (!$query){
+        if (!$query) {
             return false;
-        }else{
-            $searchWords = explode(' ', $query);
+        }
 
-            foreach ($searchWords as $searchWordKey => $searchWord) {
-                if ($searchWord != '') {
-                    $nonEmptySearchWords[] = $searchWord;
-                }
-            }
+        $searchWords = explode(' ', $query);
 
-            $searchWords = $nonEmptySearchWords;
-
-            $getAllWidgetData = self::getAllWidgetData();
-
-            if (!empty($getAllWidgetData)){
-
-                $searchResults = Array();
-
-                foreach ($getAllWidgetData as $widgetKey=>$widget){
-
-                    $text = self::getWidgetText($widget);
-
-
-                    foreach ($searchWords as $searchWord){
-                        if (substr_count(strtolower($text), strtolower($searchWord))){
-                            $result['pageId'] = $widget['pageId'];
-                            $result['title'] = $widget['title'];
-                            $result['url'] = ipHomeUrl().$widget['urlPath'];
-                            $result['description'] = self::html2text($text);
-                            $searchResults[] = $result;
-                        }
-                    }
-                }
-
-
-                $searchResults = self::filterUniquePageIds($searchResults);
-
-                return $searchResults;
+        foreach ($searchWords as $searchWordKey => $searchWord) {
+            if ($searchWord != '') {
+                $nonEmptySearchWords[] = $searchWord;
             }
         }
 
+        $searchWords = $nonEmptySearchWords;
+
+        $getAllWidgetData = self::getAllWidgetData();
+
+        if (!empty($getAllWidgetData)){
+
+            $searchResults = Array();
+
+            foreach ($getAllWidgetData as $widgetKey=>$widget){
+
+                $text = self::getWidgetText($widget);
+
+                $simplifiedText = \Ip\Internal\Text\Transliteration::transform(strtolower($text));
+
+                foreach ($searchWords as $searchWord){
+                    if (substr_count($simplifiedText, \Ip\Internal\Text\Transliteration::transform(strtolower($searchWord)))){
+                        $result['pageId'] = $widget['pageId'];
+                        $result['title'] = $widget['title'];
+                        $result['url'] = ipHomeUrl().$widget['urlPath'];
+                        $result['description'] = self::html2text($text);
+                        $searchResults[] = $result;
+                    }
+                }
+            }
+
+
+            $searchResults = self::filterUniquePageIds($searchResults);
+
+            return $searchResults;
+        }
 
     }
 
@@ -141,18 +141,17 @@ class Model{
          * @var $form \Ip\Form
          */
         $form = new \Ip\Form();
-
         $field = new \Ip\Form\Field\Text(
             array(
                 'name' => 'search',
-                'label' => __('Search:', 'Search'),
+                'label' => __('Search:', 'Search', false),
                 'value' => $query
             ));
         $form->addField($field);
-
+//
         $field = new \Ip\Form\Field\Submit(
             array(
-                'value' => __('Search', 'Search')
+                'value' => __('Search', 'Search', false)
             ));
         $form->addField($field);
 

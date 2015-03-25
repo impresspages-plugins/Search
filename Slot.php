@@ -10,9 +10,9 @@ namespace Plugin\Search;
 
 class Slot {
 
-    public static function searchBox($query)
+    public static function searchBox($params)
     {
-        $data['form'] = Model::getSearchBoxForm($query);
+        $data['form'] = Model::getSearchBoxForm('');
 
         return ipView('view/searchBox.php', $data);
     }
