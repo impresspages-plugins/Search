@@ -135,15 +135,26 @@ class Model{
 
     }
 
-    public static function getSearchBoxForm($query=''){
+    public static function getSearchBoxForm($query='')
+    {
+        $useGet = ipGetOption('Search.useGet');
+
 
         /**
          * @var $form \Ip\Form
          */
         $form = new \Ip\Form();
+
+        $form->addClass($useGet ? 'ipsGet' : 'ipsUrl');
+
+        if ($useGet) {
+            $form->setMethod(\Ip\Form::METHOD_GET);
+            $form->setAction(ipRouteUrl('Search'));
+        }
+
         $field = new \Ip\Form\Field\Text(
             array(
-                'name' => 'search',
+                'name' => 'q',
                 'label' => __('Search:', 'Search', false),
                 'value' => $query
             ));
@@ -155,12 +166,7 @@ class Model{
             ));
         $form->addField($field);
 
-        $field = new \Ip\Form\Field\Hidden(
-            array(
-                'name' => 'langUrl',
-                'value' => ipContent()->getCurrentLanguage()->getUrlPath()
-            ));
-        $form->addField($field);
+
 
         $form->setAction(ipRouteUrl('Search'));
         $form->setMethod('get');
