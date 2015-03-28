@@ -1,8 +1,8 @@
 {
     "title": "Search",
-    "version": "1.10",
+    "version": "1.11",
     "name": "Search",
-    "description": "Search plugin for Impresspages.",
+    "description": "Search plugin for ImpressPages.",
     "author": "ImpressPages",
     "options": [
         {
@@ -13,18 +13,18 @@
             "note": "Used to generate search page url. E.g. example.com/search/..."
         },
         {
-          "label": "User GET parameter",
-          "name": "useGet",
-          "type": "Checkbox",
-          "default": 0,
-          "note": "Use example.com/search/?q=xxx URLs instead of example.com/search/xxx"
+            "label": "Use GET parameter",
+            "name": "useGet",
+            "type": "Checkbox",
+            "default": 0,
+            "note": "Use example.com/search/?q=xxx URLs instead of example.com/search/xxx"
         },
         {
-          "label": "GET parameter name",
-          "name": "queryVariableName",
-          "type": "Text",
-          "default": "q",
-          "note": "Meaninful only if \"Use GET parameter\" is enabled. CAN'T BE EMPTY!"
+            "label": "GET parameter name",
+            "name": "queryVariableName",
+            "type": "Text",
+            "default": "q",
+            "note": "Meaninful only if \"Use GET parameter\" is enabled. CAN'T BE EMPTY!"
         }
     ]
 }
