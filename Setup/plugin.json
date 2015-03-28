@@ -24,7 +24,7 @@
             "name": "queryVariableName",
             "type": "Text",
             "default": "q",
-            "note": "Meaninful only if \"Use GET parameter\" is enabled. CAN'T BE EMPTY!"
+            "note": "Meaningful only if \"Use GET parameter\" is enabled. CAN'T BE EMPTY!"
         }
     ]
 }
