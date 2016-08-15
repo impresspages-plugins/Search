@@ -58,7 +58,7 @@ class Html2Text
 
         $doc = new \DOMDocument();
         $prevValue = libxml_use_internal_errors(true);
-        $loaded = $doc->loadHTML($html);
+        $loaded = $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         libxml_use_internal_errors($prevValue);
         if (!$loaded) {
             throw new Html2TextException("Could not load HTML - badly formed?", $html);
